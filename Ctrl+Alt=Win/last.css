@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+.info, .details {
+    position: absolute;
+    color: white;
+    font-family: Arial, sans-serif;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NEO Globe</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #dataLink {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <a id="dataLink" href="neo_data.html">View NEO Data</a>
+    <script>
+        // Set your Cesium ion access token
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlNGVmM2RkYS0xNGYwLTQxODAtOWViYy02YTM4Mzk3OTg0MzIiLCJpZCI6MjQ2MTgzLCJpYXQiOjE3MjgxOTE5NDN9.QlXH4EoTut_XY9tSRpArhEcs6G5EYj7b3o0Dy270PhE';
+
+        // Initialize the Cesium Viewer
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            terrainProvider: Cesium.createWorldTerrain()
+        });
+
+        // Fetch the updated NEO data from the JSON file
+        fetch('neo_data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Process and add each NEO to the globe
+                data.forEach(neo => {
+                    viewer.entities.add({
+                        name: neo.name,
+                        position: Cesium.Cartesian3.fromDegrees(neo.coordinates.lon, neo.coordinates.lat),
+                        billboard: {
+                            image: 'image1.png', // Path to your natural texture image
+                            width: 32, // Width of the image
+                            height: 32 // Height of the image
+                        },
+                        description: `
+                            <h3>${neo.name}</h3>
+                            <p>Size: ${neo.size} meters</p>
+                            <p>Approach Date: ${neo.approach_date}</p>
+                            <p>Distance: ${neo.distance} km</p>
+                        `
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching NEO data:', error));
+    </script>
+</body>
+</html>

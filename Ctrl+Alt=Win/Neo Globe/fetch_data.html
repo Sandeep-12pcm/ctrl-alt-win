@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NEO Globe</title>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.83/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 50vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #neoTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #neoTable th, #neoTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #neoTable th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    <table id="neoTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size (meters)</th>
+                <th>Approach Date</th>
+                <th>Distance (km)</th>
+            </tr>
+        </thead>
+        <tbody id="neoTableBody">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        // Set your Cesium ion access token
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlNGVmM2RkYS0xNGYwLTQxODAtOWViYy02YTM4Mzk3OTg0MzIiLCJpZCI6MjQ2MTgzLCJpYXQiOjE3MjgxOTE5NDN9.QlXH4EoTut_XY9tSRpArhEcs6G5EYj7b3o0Dy270PhE';
+
+        // Initialize the Cesium Viewer
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            terrainProvider: Cesium.createWorldTerrain()
+        });
+
+        // Fetch the updated NEO data from the JSON file
+        fetch('neo_data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Process and add each NEO to the globe and table
+                var tableBody = document.getElementById('neoTableBody');
+                data.forEach(neo => {
+                    // Add NEO to the globe
+                    viewer.entities.add({
+                        name: neo.name,
+                        position: Cesium.Cartesian3.fromDegrees(neo.coordinates.lon, neo.coordinates.lat),
+                        billboard: {
+                            image: 'image1.png', // Path to your natural texture image
+                            width: 32, // Width of the image
+                            height: 32 // Height of the image
+                        },
+                        description: `
+                            <h3>${neo.name}</h3>
+                            <p>Size: ${neo.size} meters</p>
+                            <p>Approach Date: ${neo.approach_date}</p>
+                            <p>Distance: ${neo.distance} km</p>
+                        `
+                    });
+
+                    // Create a new row for the table
+                    var row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${neo.name}</td>
+                        <td>${neo.size}</td>
+                        <td>${neo.approach_date}</td>
+                        <td>${neo.distance}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching NEO data:', error));
+    </script>
+</body>
+</html>

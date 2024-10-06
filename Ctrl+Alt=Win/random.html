@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO Filter Application</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+    <style>
+        /* Inline CSS for demonstration; you can also use a separate styles.css file */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #filters {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px; /* Add spacing between buttons */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(odd){
+            background-color: #333;
+            color:white;
+        }
+
+        
+
+        
+
+        body {
+            background-color: #7f8fc9;
+        }
+
+        #filters {
+            background-color: transparent;
+            box-shadow: 0 0 20px 5px #333; 
+        }
+
+        h1 {
+            color:white;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px 15px #333;
+            padding: 1.3rem;
+            background-color: #333;
+        }
+
+        #applyFilters {
+            background-color: #333;
+            padding: 1.24rem;
+            width:210px;
+            margin-left: 500px;
+            margin-top: 7px;
+            border : 5px double white;
+        }
+
+        #clearFilters {
+            background-color: #333;
+            padding: 1.24rem;
+            width: 210px;
+            border : 5px double white;
+        }
+
+        label {
+            font-size: 1.2rem;
+            text-align: left;
+            margin-top:15px;
+            margin-bottom: 20px;
+            color:#333;
+
+        }
+
+        input {
+            font-size: 1.25rem;
+        }
+    
+
+    </style>
+</head>
+<body>
+
+    <h1>Filter Near-Earth Objects (NEOs)</h1>
+    <br><br>
+    <div id="filters">
+        <label for="diameter"><b>Max Diameter (km):</b></label>
+        <input type="number" id="diameter" placeholder="Enter max diameter" />
+        
+        <label for="date"><b>Closest Approach Date:</b></label>
+        <input type="date" id="date" />
+        
+        <label for="velocity"><b>Max Velocity (km/s):</b></label>
+        <input type="number" id="velocity" placeholder="Enter max velocity" />
+        
+        <label for="distance"><b>Max Distance (AU):</b></label>
+        <input type="number" step="0.001" id="distance" placeholder="Enter max distance" />
+        
+        <label for="hazard"><b>Potential Hazard:</b></label>
+        <select id="hazard">
+            <option value=""><b>All</b></option>
+            <option value="Yes"><b>Yes</b></option>
+            <option value="No"><b>No</b></option>
+        </select>
+        
+        <button id="applyFilters">Apply Filters</button>
+        <button id="clearFilters">Clear</button>
+    </div>
+<br><br>
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Closest Approach Date</th>
+                <th>Diameter (km)</th>
+                <th>Velocity (km/s)</th>
+                <th>Distance (AU)</th>
+                <th>Potential Hazard</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filtered results will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        const data = [
+            { name: '2024 AB1', date: '2024-01-01', diameter: 0.5, velocity: 25.3, distance: 0.002, hazard: 'Yes' },
+            { name: '2024 AC2', date: '2024-03-15', diameter: 1.2, velocity: 18.5, distance: 0.004, hazard: 'No' },
+            { name: '2024 AD3', date: '2024-07-10', diameter: 0.8, velocity: 22.7, distance: 0.006, hazard: 'Yes' },
+            { name: '2024 AE4', date: '2024-05-21', diameter: 0.3, velocity: 30.1, distance: 0.001, hazard: 'No' },
+            { name: '2024 AF5', date: '2024-09-30', diameter: 0.6, velocity: 27.4, distance: 0.003, hazard: 'Yes' },
+            { name: '2024 AG6', date: '2024-12-01', diameter: 1.0, velocity: 19.8, distance: 0.007, hazard: 'No' }
+        ];
+
+        function applyFilters() {
+            const maxDiameter = parseFloat(document.getElementById('diameter').value);
+            const closestDate = document.getElementById('date').value;
+            const maxVelocity = parseFloat(document.getElementById('velocity').value);
+            const maxDistance = parseFloat(document.getElementById('distance').value);
+            const potentialHazard = document.getElementById('hazard').value;
+
+            const filteredData = data.filter(item => {
+                return (isNaN(maxDiameter) || item.diameter <= maxDiameter) &&
+                       (closestDate === '' || item.date <= closestDate) &&
+                       (isNaN(maxVelocity) || item.velocity <= maxVelocity) &&
+                       (isNaN(maxDistance) || item.distance <= maxDistance) &&
+                       (potentialHazard === '' || item.hazard === potentialHazard);
+            });
+
+            displayResults(filteredData);
+        }
+
+        function displayResults(results) {
+            const tbody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Clear previous results
+
+            if (results.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">No results found. Please adjust your filters.</td></tr>';
+            } else {
+                results.forEach(item => {
+                    const row = tbody.insertRow();
+                    row.insertCell(0).textContent = item.name;
+                    row.insertCell(1).textContent = item.date;
+                    row.insertCell(2).textContent = item.diameter;
+                    row.insertCell(3).textContent = item.velocity;
+                    row.insertCell(4).textContent = item.distance;
+                    row.insertCell(5).textContent = item.hazard;
+                });
+            }
+        }
+
+        function clearFilters() {
+            document.getElementById('diameter').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('velocity').value = '';
+            document.getElementById('distance').value = '';
+            document.getElementById('hazard').value = '';
+            displayResults(data); // Show all data again
+        }
+
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+        // Initial display of all data
+        displayResults(data);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #333; /* Dark background */
+    color: #333; /* Light text color */
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #6775a9; /* Slightly transparent dark background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.8); /* Soft white glow */
+    backdrop-filter: blur(10px); /* Blur effect for a glassy look */
+}
+
+h1, h2 {
+    color: #ffffff; /* Bright yellow for headings */
+}
+
+p {
+    line-height: 1.6;
+    font-size: 18px;
+}
+
+ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+a {
+    color:#ffcc00; /* Bright yellow for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Underline effect on hover */
+}
+
+button {
+    background-color: #ffcc00; /* Button color */
+    color: #000000; /* Text color for button */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e6b800; /* Darker shade on hover */
+}

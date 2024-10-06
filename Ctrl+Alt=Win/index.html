@@ -1,0 +1,189 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Earth Globe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="globe" id="globe"></div>
+    </div>
+    
+</body>
+<script src="script.js"></script>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orray: Near Earth Objects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Orrery</div>
+        <nav class="nav">
+            <a href="http://127.0.0.1:5500/pract/prac.html" onclick="showContent('home')">Home</a>
+            <a href="http://127.0.0.1:5500/random.html" onclick="showContent('Dashboard')">Dashboard</a>
+            <a href = "file:///C:/Users/NIPAM/OneDrive/Documents/database[1]/database/index.html"onclick="showContent('NEO Map')">NEO Map</a>
+            <a href="http://127.0.0.1:5500/contact/contact.html">About</a>
+            <a href="http://127.0.0.1:5500/about/about.html" target="_blank">Contact</a>
+            <!-- <input type="text" placeholder="Search NEOs..." class="search-bar"> -->
+        </nav>
+    </header>
+
+    <main>
+        <section class="dashboard">
+            <!-- <div class="filters">
+                <h2>Filters</h2>
+                
+                Filters can be added here -->
+                <!-- <div class="filters">
+                    <h2>Filters</h2>
+                    <label for="minDiameter">Min Diameter (km):</label>
+                    <input type="number" id="minDiameter" placeholder="0" min="0">
+                    <br>
+                    <label for="maxDiameter">Max Diameter (km):</label>
+                    <input type="number" id="maxDiameter" placeholder="10" min="0">
+                    <br>
+                    <label for="maxVelocity">Max Velocity (km/s):</label>
+                    <input type="number" id="maxVelocity" placeholder="30" min="0">
+                    <br>
+                    <label for="potentialHazard">Potential Hazard:</label>
+                    <br>
+                    <select id="potentialHazard"><br>
+                        <br>
+                        <option value="all">All</option><br>
+                        <option value="Yes">Yes</option><br>
+                        <option value="No">No</option>
+                    </select>
+                    
+                    <button id="applyFilters">Apply Filters</button>
+                </div> 
+                
+            </div> -->
+            <!-- <div class="chart">
+                <h2>NEO Visualization</h2>
+                <canvas id="neoChart"></canvas>
+            </div> -->
+
+        </section>
+
+        <div class="details-section">
+            <h2>Near Earth Objects List</h2><br>
+            <table class="neo-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Closest Approach Date</th>
+                        <th>Diameter (km)</th>
+                        <th>Velocity (km/s)</th>
+                        <th>Distance (AU)</th>
+                        <th>Potential Hazard</th>
+                    </tr>
+                </thead>
+                <tbody id="neoTableBody">
+                    <!-- NEO Data Rows will be inserted here by JavaScript -->
+                     <tr>
+                        <th>1. The asteroid 2024 AB1 </th>
+                        <th>January 1, 2024.</th>
+                        <th>0.5 kilometers</th>
+                        <th>25.3 km/s</th>
+                        <th>0.002 AU </th>
+                        <th>Yes</th>
+                     </tr>
+
+
+                     <tr>
+                        <th>2. The asteroid 2024 AC2 </th>
+                        <th> March 15, 2024</th>
+                        <th>  1.2 kilometers </th>
+                        <th> 18.5 km/s </th>
+                        <th> 0.004 AU  </th>
+                        <th> No </th>
+                     </tr>
+
+
+                     <tr>
+                        <th>3. The asteroid 2024 AD3 </th>
+                        <th>July 10, 2024</th>
+                        <th> 0.8 kilometers</th>
+                        <th>22.7 km/s</th>
+                        <th> 0.006AU</th>
+                        <th> Yes </th>
+                     </tr>
+
+
+                     <tr>
+                        <th>4. The asteroid 2024 AE4 </th>
+                        <th>May 21, 2024.</th>
+                        <th>0.3 kilometers</th>
+                        <th>30.1 km/s</th>
+                        <th>0.001 AU </th>
+                        <th> No </th>
+                     </tr>
+
+
+                     <tr>
+                        <th>5. The asteroid 2024 AF5</th>
+                        <th> September 30, 2024.</th>
+                        <th>0.6 kilometers</th>
+                        <th>27.4 km/s</th>
+                        <th> 0.003 AU</th>
+                        <th>Yes</th>
+                     </tr>
+
+
+                     
+                     <tr>
+                        <th>6. The asteroid 2024 AG6</th>
+                        <th>December 1, 2024</th>
+                        <th>1.0 kilometers</th>
+                        <th>19.8 km/s</th>
+                        <th>0.007 AU</th>
+                        <th>No</th>
+                     </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Orray. All Rights Reserved.</p><br>  
+        <h3>Created By </h3><br>
+        <h3>Nipam Parmar , Rajpura Zakirhussain , Sandeep Student of Computer Science Engineering AT, IITRAM , Ahemedabad , Gujarat </h3>
+    </footer>
+
+    <div class="space">
+        <div class="earth"></div>
+        <div class="orbit orbit1">
+            <div class="planet planet1"></div>
+        </div>
+        <div class="orbit orbit2">
+            <div class="planet planet2"></div>
+        </div>
+        <div class="orbit orbit3">
+            <div class="planet planet3"></div>
+        </div>
+        <div class="orbit orbit4">
+            <div class="planet planet4"></div>
+        </div>
+        <div class="orbit orbit5">
+            <div class="planet planet5"></div>
+        </div>
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+
+</body>
+</html>
