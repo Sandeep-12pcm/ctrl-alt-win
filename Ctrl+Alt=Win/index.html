@@ -20,8 +20,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orray: Near Earth Objects</title>
+    <title>Orrery: Near Earth Objects</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        } */
+        #neoTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #neoTable th, #neoTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #neoTable th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        #backLink {
+            display: block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -29,10 +54,10 @@
         <nav class="nav">
             <a href="http://127.0.0.1:5500/pract/prac.html" onclick="showContent('home')">Home</a>
             <a href="http://127.0.0.1:5500/random.html" onclick="showContent('Dashboard')">Dashboard</a>
-            <a href = "file:///C:/Users/NIPAM/OneDrive/Documents/database[1]/database/index.html"onclick="showContent('NEO Map')">NEO Map</a>
-            <a href="http://127.0.0.1:5500/contact/contact.html">About</a>
-            <a href="http://127.0.0.1:5500/about/about.html" target="_blank">Contact</a>
-            <!-- <input type="text" placeholder="Search NEOs..." class="search-bar"> -->
+            <a href="Neo Globe/index.html" onclick="showContent('NEO Map')">NEO Map</a>
+            <a href="https://www.bing.com/search?q=href+meaning&cvid=a79d6a066d87445398abdfdc862e1f64&gs_lcrp=EgZjaHJvbWUqBggAEAAYQDIGCAAQABhAMgYIARAAGEAyBggCEAAYQDIGCAMQABhAMgYIBBAAGEAyBggFEAAYQDIGCAYQABhAMgYIBxAAGEDSAQg0MDU1ajBqMagCALACAA&FORM=ANAB01&PC=EE04">About</a>
+            <a href="#">Contact</a>
+            <input type="text" placeholder="Search NEOs..." class="search-bar">
         </nav>
     </header>
 
@@ -75,92 +100,59 @@
 
         <div class="details-section">
             <h2>Near Earth Objects List</h2><br>
-            <table class="neo-table">
+            <table class="neo-table" id="neoTable">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Closest Approach Date</th>
-                        <th>Diameter (km)</th>
-                        <th>Velocity (km/s)</th>
-                        <th>Distance (AU)</th>
-                        <th>Potential Hazard</th>
+                <th>Size (meters)</th>
+                <th>Approach Date</th>
+                <th>Distance (km)</th>
                     </tr>
                 </thead>
                 <tbody id="neoTableBody">
                     <!-- NEO Data Rows will be inserted here by JavaScript -->
-                     <tr>
-                        <th>1. The asteroid 2024 AB1 </th>
-                        <th>January 1, 2024.</th>
-                        <th>0.5 kilometers</th>
-                        <th>25.3 km/s</th>
-                        <th>0.002 AU </th>
-                        <th>Yes</th>
-                     </tr>
-
-
-                     <tr>
-                        <th>2. The asteroid 2024 AC2 </th>
-                        <th> March 15, 2024</th>
-                        <th>  1.2 kilometers </th>
-                        <th> 18.5 km/s </th>
-                        <th> 0.004 AU  </th>
-                        <th> No </th>
-                     </tr>
-
-
-                     <tr>
-                        <th>3. The asteroid 2024 AD3 </th>
-                        <th>July 10, 2024</th>
-                        <th> 0.8 kilometers</th>
-                        <th>22.7 km/s</th>
-                        <th> 0.006AU</th>
-                        <th> Yes </th>
-                     </tr>
-
-
-                     <tr>
-                        <th>4. The asteroid 2024 AE4 </th>
-                        <th>May 21, 2024.</th>
-                        <th>0.3 kilometers</th>
-                        <th>30.1 km/s</th>
-                        <th>0.001 AU </th>
-                        <th> No </th>
-                     </tr>
-
-
-                     <tr>
-                        <th>5. The asteroid 2024 AF5</th>
-                        <th> September 30, 2024.</th>
-                        <th>0.6 kilometers</th>
-                        <th>27.4 km/s</th>
-                        <th> 0.003 AU</th>
-                        <th>Yes</th>
-                     </tr>
-
-
-                     
-                     <tr>
-                        <th>6. The asteroid 2024 AG6</th>
-                        <th>December 1, 2024</th>
-                        <th>1.0 kilometers</th>
-                        <th>19.8 km/s</th>
-                        <th>0.007 AU</th>
-                        <th>No</th>
-                     </tr>
+                    <script>
+                        // Fetch the updated NEO data from the JSON file
+                        fetch('neo_data.json')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Process and add each NEO to the table
+                                var tableBody = document.getElementById('neoTableBody');
+                                data.forEach(neo => {
+                                    // Create a new row for the table
+                                    var row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${neo.name}</td>
+                                        <td>${neo.size}</td>
+                                        <td>${neo.approach_date}</td>
+                                        <td>${neo.distance}</td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                });
+                            })
+                            .catch(error => console.error('Error fetching NEO data:', error));
+                    </script>
                 </tbody>
 
 
             </table>
         </div>
     </main>
-
     <footer class="footer">
         <p>&copy; 2024 Orray. All Rights Reserved.</p><br>  
         <h3>Created By </h3><br>
         <h3>Nipam Parmar , Rajpura Zakirhussain , Sandeep Student of Computer Science Engineering AT, IITRAM , Ahemedabad , Gujarat </h3>
     </footer>
+    <!-- <footer class="footer">
+        <p>&copy; 2024 Orray. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/login.php/#:~:text=Log%20into%20Facebook%20to%20start%20sharing%20and%20connecting%20with%20your">Facebook</a>
+            <a href="https://www.bing.com/ck/a?!&&p=fc987447415125e2JmltdHM9MTcyODA4NjQwMCZpZ3VpZD0xOGY4ZTQ0Yy01ZTdjLTYyOTItMzJjMC1mN2U0NWYxODYzMDMmaW5zaWQ9NTE5Mg&ptn=3&ver=2&hsh=3&fclid=18f8e44c-5e7c-6292-32c0-f7e45f186303&psq=twitter+login+page&u=a1aHR0cHM6Ly90d2l0dGVyLmNvbS9sb2dpbiM6fjp0ZXh0PUxvZyBpbiB0byBUd2l0dGVyIHRvIGNoZWNrIG5vdGlmaWNhdGlvbnMsIGpvaW4gY29udmVyc2F0aW9ucywgYW5k&ntb=1">Twitter</a>
+            <a href="https://www.bing.com/ck/a?!&&p=c5a94c16dda69947JmltdHM9MTcyODA4NjQwMCZpZ3VpZD0xOGY4ZTQ0Yy01ZTdjLTYyOTItMzJjMC1mN2U0NWYxODYzMDMmaW5zaWQ9NTYxNw&ptn=3&ver=2&hsh=3&fclid=18f8e44c-5e7c-6292-32c0-f7e45f186303&psq=linkedin+login+page&u=a1aHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2xvZ2lu&ntb=1">LinkedIn</a>
+        </div>
+    </footer> -->
 
-    <div class="space">
+    <!-- <div class="space">
         <div class="earth"></div>
         <div class="orbit orbit1">
             <div class="planet planet1"></div>
@@ -177,8 +169,20 @@
         <div class="orbit orbit5">
             <div class="planet planet5"></div>
         </div>
-    </div>
-
+    </div> -->
+    <!-- <table id="neoTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size (meters)</th>
+                <th>Approach Date</th>
+                <th>Distance (km)</th>
+            </tr>
+        </thead>
+        <tbody id="neoTableBody">
+             Data will be inserted here 
+        </tbody>
+    </table> -->
     
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
